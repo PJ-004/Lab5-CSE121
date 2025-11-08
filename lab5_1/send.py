@@ -2,11 +2,32 @@ import RPi.GPIO as GPIO
 import time
 import sys
 
-DOT         = 1
-DASH        = 4
-CHAR_GAP    = 2
-WORD_GAP    = 6
-TERMINATE   = 8
+"""
+DOT         = 0.02
+DASH        = 0.04
+CHAR_GAP    = 0.06
+WORD_GAP    = 0.08
+"""
+
+"""
+DOT         = 0.01
+DASH        = 0.03
+CHAR_GAP    = 0.02
+WORD_GAP    = 0.05
+"""
+
+"""
+DOT         = 0.01
+DASH        = 0.05
+CHAR_GAP    = 0.03
+WORD_GAP    = 0.07
+"""
+
+DOT         = 0.1
+DASH        = 0.3
+CHAR_GAP    = 0.4
+WORD_GAP    = 0.6
+SYMBOL_GAP  = 0.1 
 
 class ArgumentError(Exception):
     pass
@@ -60,7 +81,6 @@ class morse_translator():
             '-'     : DASH    ,
             '/'     : WORD_GAP,
             ' '     : CHAR_GAP,
-            '|'     : TERMINATE
         }
         self.number_of_messages = message_number
         self.message = message
@@ -74,10 +94,10 @@ class morse_translator():
                 morse_translation += self.morse_code_dict[letter.upper()] if letter != ' ' else ' '
                 morse_translation += ' '
             
-            morse_translation += '/ '
+            morse_translation += '/'
         
         morse_translation = morse_translation.rstrip(' /')
-        morse_translation += '|'
+        morse_translation += '/'
         return morse_translation
     
     def send_morse_message(self):
@@ -86,12 +106,17 @@ class morse_translator():
         
             try:
                 for letter in self.translation:
-                    print(f"Current Symbol: {letter} | Intended to last: {self.morse_code_durations[letter]}")
-                    GPIO.output(4, GPIO.HIGH)
-                    time.sleep(self.morse_code_durations[letter])
-        
-                    GPIO.output(4, GPIO.LOW)
-                    time.sleep(0.5)
+                    if letter in ['.', '-']:
+                        print(f"Current Symbol: {letter} | Intended to turn on for: {self.morse_code_durations[letter]}")
+                        GPIO.output(4, GPIO.HIGH)
+                        time.sleep(self.morse_code_durations[letter])
+                        GPIO.output(4, GPIO.LOW)
+                        time.sleep(SYMBOL_GAP) 
+                    
+                    elif letter in ['/', ' ']:
+                        print(f"Current Symbol: {letter} | Intended to turn off for: {self.morse_code_durations[letter]}")
+                        GPIO.output(4, GPIO.LOW)
+                        time.sleep(self.morse_code_durations[letter])
 
             except KeyboardInterrupt:
                 print("\nExiting translation early")
