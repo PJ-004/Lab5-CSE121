@@ -23,11 +23,11 @@ CHAR_GAP    = 0.03
 WORD_GAP    = 0.07
 """
 
-DOT         = 0.1
-DASH        = 0.3
-CHAR_GAP    = 0.4
-WORD_GAP    = 0.6
-SYMBOL_GAP  = 0.1 
+DOT         = 0.01
+DASH        = 0.02
+CHAR_GAP    = 0.03
+WORD_GAP    = 0.04
+SYMBOL_GAP  = 0.01 
 
 class ArgumentError(Exception):
     pass
@@ -90,10 +90,11 @@ class morse_translator():
         morse_translation = ''
         for word in self.message.split():
         
-            for letter in word:
-                morse_translation += self.morse_code_dict[letter.upper()] if letter != ' ' else ' '
-                morse_translation += ' '
-            
+            for index, letter in enumerate(word):
+                morse_translation += self.morse_code_dict[letter.upper()]
+                if index != len(word) - 1:
+                    morse_translation += ' '
+
             morse_translation += '/'
         
         morse_translation = morse_translation.rstrip(' /')
@@ -122,7 +123,11 @@ class morse_translator():
                 print("\nExiting translation early")
                 GPIO.output(4, GPIO.LOW)
                 break
-
+        
+        print("Done sending morse code")
+        GPIO.output(4, GPIO.HIGH)
+        time.sleep(SYMBOL_GAP)
+        GPIO.output(4, GPIO.LOW)
 
     def print_translation():
         print(f'The message "{self.message}" translates to "{self.translation}"')
