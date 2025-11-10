@@ -23,11 +23,18 @@ CHAR_GAP    = 0.03
 WORD_GAP    = 0.07
 """
 
-DOT         = 0.01
-DASH        = 0.02
-CHAR_GAP    = 0.03
-WORD_GAP    = 0.04
-SYMBOL_GAP  = 0.01 
+"""
+DOT         = 0.05
+DASH        = 0.10
+CHAR_GAP    = 0.15
+WORD_GAP    = 0.20
+SYMBOL_GAP  = 0.05
+"""
+DOT         = 0.06
+DASH        = 0.12
+CHAR_GAP    = 0.18
+WORD_GAP    = 0.24
+SYMBOL_GAP  = 0.06 
 
 class ArgumentError(Exception):
     pass
