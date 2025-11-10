@@ -143,7 +143,7 @@ void app_main(void)
     int prev_off = 0;
     bool led = false;
     char morse_char[128] = "";
-    char translation[128] = "";
+    char translation[512] = "";
     while (true) {
 	ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, EXAMPLE_ADC1_CHAN1, &adc_raw[0][1]));
         

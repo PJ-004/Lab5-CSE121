@@ -217,7 +217,7 @@ extern "C" void app_main(void)
 	}
 
 	//ESP_LOGI(TAG, "Current Morse: %s | Translation so far: %s | Off: %d | On: %d", morse_char.c_str(), translation.c_str(), off, on);	
-	vTaskDelay(pdMS_TO_TICKS(10));
+	vTaskDelay(pdMS_TO_TICKS(60));
     }
 
     //Tear Down
