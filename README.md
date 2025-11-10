@@ -4,8 +4,7 @@ https://pypi.org/project/RPi.GPIO/
 
 To download it on Ubuntu/Debian use:  
 
-`sudo apt-get install python-pip python-dev python3-dev -y`  
-`sudo pip install RPI.GPIO`  
+`sudo apt-get install python3-rpi.gpio -y` \[Note: The -y is optional\]  
 
 Also esp-idf needs to be set up  
 
