@@ -4,39 +4,23 @@ import RPi.GPIO as GPIO
 import time
 import sys
 
+# Uncomment to get values for lab5_2
 """
-DOT         = 0.02
-DASH        = 0.04
-CHAR_GAP    = 0.06
-WORD_GAP    = 0.08
-"""
-
-"""
-DOT         = 0.01
-DASH        = 0.03
-CHAR_GAP    = 0.02
-WORD_GAP    = 0.05
+DOT         = 0.1
+DASH        = 0.2
+CHAR_GAP    = 0.3
+WORD_GAP    = 0.4
+SYMBOL_GAP  = 0.1
 """
 
-"""
-DOT         = 0.01
-DASH        = 0.05
-CHAR_GAP    = 0.03
-WORD_GAP    = 0.07
-"""
-
-"""
-DOT         = 0.05
-DASH        = 0.10
-CHAR_GAP    = 0.15
-WORD_GAP    = 0.20
-SYMBOL_GAP  = 0.05
-"""
+#Uncomment to get values for lab5_3
+# """
 DOT         = 0.06
 DASH        = 0.12
 CHAR_GAP    = 0.18
 WORD_GAP    = 0.24
 SYMBOL_GAP  = 0.06 
+# """ 
 
 class ArgumentError(Exception):
     pass
