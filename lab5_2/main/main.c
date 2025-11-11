@@ -108,8 +108,8 @@ translation morse_code_t[] = {
 void translate(char* string, char* morse) {
     for (int i = 0; i < 37; ++i) {
     	if (!strcmp(morse_code_t[i].morse, morse)) {
-	    strcat(string, morse_code_t[i].letter);
-	}
+		    strcat(string, morse_code_t[i].letter);
+		}
     }
 }
 
@@ -136,71 +136,70 @@ void app_main(void)
     bool do_calibration1_chan0 = example_adc_calibration_init(ADC_UNIT_1, EXAMPLE_ADC1_CHAN0, EXAMPLE_ADC_ATTEN, &adc1_cali_chan0_handle);
     bool do_calibration1_chan1 = example_adc_calibration_init(ADC_UNIT_1, EXAMPLE_ADC1_CHAN1, EXAMPLE_ADC_ATTEN, &adc1_cali_chan1_handle);
 
-    //int time = 0;
     int on = 0;
     int prev_on = 0;
     int off = 0;
     int prev_off = 0;
     bool led = false;
+	
     char morse_char[128] = "";
     char translation[512] = "";
-    while (true) {
-	ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, EXAMPLE_ADC1_CHAN1, &adc_raw[0][1]));
+    
+	while (true) {
+		ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, EXAMPLE_ADC1_CHAN1, &adc_raw[0][1]));
         
-	if (do_calibration1_chan1) {
-            ESP_ERROR_CHECK(adc_cali_raw_to_voltage(adc1_cali_chan1_handle, adc_raw[0][1], &voltage[0][1]));
-
-	    if (voltage[0][1] >= VOLTAGE_THRESHOLD) {
-		prev_off = off;
-	    	led = true;
-		++on;
-		off = 0;
-	    } else {
-		prev_on = on;
-	    	led = false;
-		++off;
-		on = 0;
-	    }
-	}
-
-	if (led) {
-	    switch(prev_off) {
-	        case NEW_LETTER:
-		    translate(translation, morse_char);
-		    memset(morse_char, 0, 128);
-		    ESP_LOGI(TAG, "Sentence so far: %s", translation);
-		    break;
-		case NEW_WORD:
-		    translate(translation, morse_char);
-		    memset(morse_char, 0, 128);
-		    strcat(translation, " ");
-		    ESP_LOGI(TAG, "Sentence so far: %s", translation);
-		    break;
-		default:
-		    break;
-	    }
-	} else {
-            switch(prev_on) {
-	        case DOT:
-		    strcat(morse_char, ".");
-	    	    //ESP_LOGI(TAG, "Off: %d | On: %d | Current Morse: %s|", prev_off, prev_on, morse_char);
-		    break;
-		case DASH:
-		    strcat(morse_char, "-");
-	    	    //ESP_LOGI(TAG, "Off: %d | On: %d | Current Morse: %s|", prev_off, prev_on, morse_char);
-		    break;
-		default:
-		    break;
-	    }
-	}
+		if (do_calibration1_chan1) {
+	        ESP_ERROR_CHECK(adc_cali_raw_to_voltage(adc1_cali_chan1_handle, adc_raw[0][1], &voltage[0][1]));
+	
+		    if (voltage[0][1] >= VOLTAGE_THRESHOLD) {
+				prev_off = off;
+		    	led = true;
+				++on;
+				off = 0;
+		    } else {
+				prev_on = on;
+		    	led = false;
+				++off;
+				on = 0;
+		    }
+		}
+	
+		if (led) {
+		    switch(prev_off) {
+		        case NEW_LETTER:
+			    	translate(translation, morse_char);
+			    	memset(morse_char, 0, 128);
+			    	ESP_LOGI(TAG, "Sentence so far: %s", translation);
+			    	break;
+				case NEW_WORD:
+			    	translate(translation, morse_char);
+			    	memset(morse_char, 0, 128);
+			    	strcat(translation, " ");
+			    	ESP_LOGI(TAG, "Sentence so far: %s", translation);
+			    	break;
+				default:
+			    	break;
+		    }
+		} else {
+	        switch(prev_on) {
+		        case DOT:
+			    	strcat(morse_char, ".");
+	    	    	//ESP_LOGI(TAG, "Off: %d | On: %d | Current Morse: %s|", prev_off, prev_on, morse_char);
+		    		break;
+				case DASH:
+			    	strcat(morse_char, "-");
+		    	    //ESP_LOGI(TAG, "Off: %d | On: %d | Current Morse: %s|", prev_off, prev_on, morse_char);
+			    	break;
+				default:
+			    	break;
+	    	}
+		}
 
         //ESP_LOGI(TAG, "Current Morse: %s | LED off for: %d | LED on for: %d |", morse_char, off, on);
-	vTaskDelay(pdMS_TO_TICKS(100));
+		vTaskDelay(pdMS_TO_TICKS(100));
     }
-
-
-    //Tear Down
 	
+    //Tear Down
     ESP_ERROR_CHECK(adc_oneshot_del_unit(adc1_handle));
     if (do_calibration1_chan0) {
         example_adc_calibration_deinit(adc1_cali_chan0_handle);
