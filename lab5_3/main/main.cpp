@@ -46,39 +46,7 @@ const static char *TAG = "EXAMPLE";
 
 #define EXAMPLE_ADC_ATTEN           ADC_ATTEN_DB_12
 
-/*
-#define DOT_DURATION		1
-#define	DASH_DURATION		4
-#define CHAR_DURATION		2
-#define WORD_DURATION		6
-#define END_SENTENCE		8
-*/
-
-/*
-#define DOT_DURATION		20
-#define	DASH_DURATION		40
-#define CHAR_DURATION		10
-#define WORD_DURATION		60
-#define END_SENTENCE		80
-*/
-
-/*
-#define DOT_DURATION		10
-#define	DASH_DURATION		50
-#define CHAR_DURATION		30
-#define WORD_DURATION		70
-#define END_SENTENCE		90
-*/
-
-// 0.6 ms times
-/*
-#define DOT_DURATION		1
-#define	DASH_DURATION		2
-#define CHAR_DURATION		3
-#define WORD_DURATION		4
-*/
-
-#define DOT			1
+#define DOT				1
 #define DASH			2
 #define NEW_LETTER		4
 #define NEW_WORD		5
