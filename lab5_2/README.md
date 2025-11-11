@@ -26,7 +26,7 @@ idf.py -p PORT flash monitor
 
 See the Getting Started Guide for full steps to configure and use ESP-IDF to build projects.
 
-### How to use
+### Read from file
 
 The photoelectric sensor reads from an LED. The variable THRESHOLD_VOLTAGE may be different for you, so you'll need to set it yourself. In my case it was 110 mV.   
 
