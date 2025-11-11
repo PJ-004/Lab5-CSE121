@@ -44,7 +44,7 @@ const static char *TAG = "EXAMPLE";
 
 #define EXAMPLE_ADC_ATTEN           ADC_ATTEN_DB_12
 
-#define DOT			1
+#define DOT				1
 #define DASH			2
 #define NEW_LETTER		4
 #define NEW_WORD		5
